@@ -1,0 +1,37 @@
+fun main() {
+    
+    //variable implicita
+    var numero = 15;
+    var costo = 15.9;
+    var codigo = "zero";
+    var nintendo = "mario";
+    var zelda = "link";
+    
+    
+    //variable explicita
+    var numero2 = double = 33;
+    var animal = string = "vaca";
+    var pintura = Int = "amarillo";
+    var china = string = "naranja";
+    var aaaaa = double = 123;
+     
+    
+    //constante implicita
+    
+    val number = 15;
+    val cost = 15.9;
+    val code = "zero";
+    val sony = "kratos";
+    val samus = "ridley";
+    
+    //constante explicita 
+    
+    val number2 = double = 34;
+    val cow = string = "animal";
+    val paint = Int = "yellow";
+    val japan = string = "anime";
+    val bbbbbb = double = 321;
+    
+    
+    
+}
