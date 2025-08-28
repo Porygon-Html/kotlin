@@ -1,26 +1,166 @@
-﻿//objetivo hacer que cada personaje se presente 
-data class Personaje(
-        val nombre: String,
-        val apellido: String,
-        val edad: Int, 
-        val poder: String, 
-        val oficio: String
+enum class EstadosBebes {
+    despierto,
+    llorando,
+    dormido,
+    comiendo,
+    cagado_y_miado,
+    viendo_paw_patrol,
+    tieso,
+    jugando,
+    riendo,
+    enfermo,
+    gateando,
+    nadando
+}
+
+class Bebe(
+    var nombre: String,
+    var hambre: Int,
+    var panal_lleno: Int,
+    var sueno: Int,
+    var estado: EstadosBebes = EstadosBebes.despierto
 ) {
-        fun presentarse() {
-                println("Soy $nombre $apellido, tengo $edad años, mi poder es $poder y soy un $oficio.")
-        }
+
+    fun alimentar() {
+        if (estado != EstadosBebes.tieso) {
+            estado = EstadosBebes.comiendo
+        }
+    }
+
+    fun dormir() {
+        if ((estado == EstadosBebes.despierto || estado == EstadosBebes.comiendo) && sueno > 49 && estado != EstadosBebes.tieso) {
+            sueno = 0
+            estado = EstadosBebes.dormido
+        }
+    }
+
+    fun despertar() {
+        if (estado == EstadosBebes.dormido) {
+            estado = EstadosBebes.despierto
+        }
+    }
+
+    fun despertar_con_agua() {
+        if (estado == EstadosBebes.dormido) {
+            estado = EstadosBebes.tieso
+        }
+    }
+
+    fun actualizar_estado() {
+        when (estado) {
+            EstadosBebes.despierto -> {
+                sueno += 5
+                hambre += 5
+                panal_lleno += 3
+            }
+            EstadosBebes.comiendo -> {
+                hambre -= 40
+            }
+            EstadosBebes.jugando -> {
+                hambre += 3
+                sueno += 4
+            }
+            EstadosBebes.riendo -> {
+                hambre += 2
+                sueno += 2
+            }
+            EstadosBebes.enfermo -> {
+                hambre += 1
+                sueno += 5
+            }
+            else -> { }
+        }
+    }
+
+    fun picar_con_un_palo(): String {
+        return estado_actual()
+    }
+
+fun estado_actual(): String {
+    if (estado == EstadosBebes.despierto) {
+        return "El bebe esta despierto"
+    }
+    if (estado == EstadosBebes.tieso) {
+        return "Estoy muerto"
+    }
+    if (estado == EstadosBebes.dormido) {
+        return "Esta dormidito"
+    }
+    if (estado == EstadosBebes.comiendo) {
+        return "Estoy alimentandome para ser grande y fuerte"
+    }
+    if (estado == EstadosBebes.jugando) {
+        return "Estoy jugando con mis juguetes"
+    }
+    if (estado == EstadosBebes.riendo) {
+        return "Me estoy riendo mucho"
+    }
+    if (estado == EstadosBebes.enfermo) {
+        return "No me siento bien"
+    }
+    if (estado == EstadosBebes.gateando) {
+        return "Estoy explorando"
+    }
+    if (estado == EstadosBebes.nadando) {
+        return "Estoy nadando"
+    }
+    if (estado == EstadosBebes.llorando) {
+        return "Estoy llorando a todo pulmon"
+    }
+    if (estado == EstadosBebes.cagado_y_miado) {
+        return "Necesito un cambio urgente"
+    }
+    if (estado == EstadosBebes.viendo_paw_patrol) {
+        return "Estoy viendo paw patrol muy concentrado"
+    }
+    return "No identifico el estado"
+}
+    
+}
+
+class Nino(
+    var nombre: String,
+    var energia: Int,
+    var felicidad: Int,
+    var estado: String = "jugando"
+) {
+    fun ir_a_la_escuela() {
+        estado = "en la escuela"
+        energia -= 10
+    }
+
+    fun comer_dulces() {
+        estado = "comiendo dulces"
+        energia += 5
+        felicidad += 10
+    }
+
+    fun ver_tele() {
+        estado = "viendo tele"
+        energia += 2
+        felicidad += 3
+    }
+
+    fun estado_actual(): String {
+        return "El ninio $nombre esta actualmente $estado"
+    }
 }
 
 fun main() {
-        val Deku = Personaje("izuku", "midoriya", 16, "all for one", "heroe")
-        val Bakugo = Personaje("katsuki", "bakugo", 16, "explosion", "heroe")
-        val Todoroki = Personaje("shoto", "todoroki", 16, "hielo y fuego", "heroe")
-        val Shigaraki = Personaje("tomura", "shigaraki", 21, "desintegracion", "villano")
-        val Dabi = Personaje("touya", "todoroki", 24, "llamas azules", "villano")
+    val JackieShieras = Bebe("Jackie Shieras", 50, 10, 70)
 
-        Deku.presentarse()
-        Bakugo.presentarse()
-        Todoroki.presentarse()
-        Shigaraki.presentarse()
-        Dabi.presentarse()
+    JackieShieras.actualizar_estado()
+    println("El estado del bebe es ${JackieShieras.estado_actual()}")
+    JackieShieras.dormir()
+    println("El estado del bebe es ${JackieShieras.estado_actual()}")
+    JackieShieras.despertar_con_agua()
+    println("El estado del bebe es ${JackieShieras.estado_actual()}")
+    JackieShieras.alimentar() 
+    println("El estado del bebe es ${JackieShieras.estado_actual()}")
+
+    val pedrito = Nino("Pedrito", 80, 60)
+    pedrito.ir_a_la_escuela()
+    println(pedrito.estado_actual())
+    pedrito.comer_dulces()
+    println(pedrito.estado_actual())
 }
